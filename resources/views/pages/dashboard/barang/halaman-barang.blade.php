@@ -14,6 +14,7 @@
                 <th class="text-left">jenis</th>
                 <th class="text-left">nama barang</th>
                 <th class="text-left">stok</th>
+                <th class="text-left">total stok</th>
                 <th class="text-left">satuan</th>
                 <th class="text-left">status</th>
             </thead>
@@ -25,6 +26,7 @@
                     <td class="text-left">{{$brg->jenis}}</td>
                     <td class="text-left">{{$brg->nama}}</td>
                     <td class="text-left">{{$brg->stok}}</td>
+                    <td class="text-left">{{$brg->total_stok}}</td>
                     <td class="text-left">
                         {{$brg->nama_satuan}}
                     </td>
