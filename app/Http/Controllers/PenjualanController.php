@@ -12,12 +12,13 @@ class PenjualanController extends Controller
      */
     public function halamanPenjualan()
     {
-        $list = DB::table('penjualan')->get();
-        $users = DB::table('users')->whereIn('iduser', $list->pluck('iduser'))->get();
+        $list = DB::table('penjualan')
+            ->select('penjualan.*', 'users.iduser', 'users.username')
+            ->join('users', 'users.iduser', '=', 'penjualan.iduser')
+            ->get();
 
         return view('pages.dashboard.penjualan.halaman-penjualan', [
-            'list' => $list,
-            'users' => $users,
+            'listPenjualan' => $list,
         ]);
     }
 
@@ -28,7 +29,9 @@ class PenjualanController extends Controller
     {
         $barang = DB::table('barang')->get();
 
-        return view('pages.dashboard.penjualan.form-tambah', ['barang' => $barang]);
+        return view('pages.dashboard.penjualan.form-tambah', [
+            'barang' => $barang,
+        ]);
     }
 
     /**
@@ -38,8 +41,8 @@ class PenjualanController extends Controller
     {
         $validated = $request->validate([
             'barang' => 'required|array',
-            'barang.*.idbarang' => 'required|exists:barang,idbarang',
-            'barang.*.jumlah' => 'required|integer|min:1',
+            'barang.*.idbarang' => 'exists:barang,idbarang',
+            'barang.*.jumlah' => 'integer|min:0',
         ]);
 
         $idpenjualan = DB::table('penjualan')->insertGetId([
@@ -52,6 +55,10 @@ class PenjualanController extends Controller
 
         $totalPembelian = 0;
         foreach($validated['barang'] as $formBarang) {
+            if (!isset($formBarang['idbarang'])) {
+                continue;
+            }
+
             $barang = DB::table('barang')->where('idbarang', $formBarang['idbarang'])->first();
 
             DB::table('penjualan_detail')->insert([
@@ -75,6 +82,6 @@ class PenjualanController extends Controller
 
         return redirect()
             ->route('dashboard.penjualan.halamanPenjualan')
-            ->with(['message' => ' Berhasil Simpan ' . $validated['nama_penjualan']]);
+            ->with(['message' => ' Berhasil Simpan']);
     }
 }

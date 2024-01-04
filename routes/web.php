@@ -67,7 +67,7 @@ Route::prefix('dashboard')
         Route::prefix('penjualan')
             ->controller(PenjualanController::class)
             ->group(function () {
-                Route::get('', 'penjualan')->name('dashboard.penjualan.halamanPenjualan');
+                Route::get('', 'halamanPenjualan')->name('dashboard.penjualan.halamanPenjualan');
                 Route::get('tambah', 'formTambah')->name('dashboard.penjualan.form-tambah');
                 Route::post('tambah', 'tambah')->name('dashboard.penjualan.tambah');
                 Route::get('{id}/detail', 'detail')->name('dashboard.penjualan.detail');

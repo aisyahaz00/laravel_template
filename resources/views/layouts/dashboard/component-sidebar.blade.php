@@ -20,7 +20,7 @@
             Route::getCurrentRoute()->getName() === 'dashboard.barang.halamanBarang',
             ])>
             <x-fas-box class="w-5 h-5" />
-            <div>Product</div>
+            <div>Barang</div>
         </a>
         <a href="{{ route('dashboard.satuan.halamanSatuan') }}" @class([ 'sidebar-link' , 'active'=>
             Route::getCurrentRoute()->getName() === 'dashboard.satuan.halamanSatuan',
@@ -33,6 +33,12 @@
             ])>
             <x-fas-box class="w-5 h-5" />
             <div>Vendor</div>
+        </a>
+        <a href="{{ route('dashboard.penjualan.halamanPenjualan') }}" @class([ 'sidebar-link' , 'active'=>
+            Route::getCurrentRoute()->getName() === 'dashboard.penjualan.halamanPenjualan',
+            ])>
+            <x-fas-box class="w-5 h-5" />
+            <div>Penjualan</div>
         </a>
     </div>
 </div>
